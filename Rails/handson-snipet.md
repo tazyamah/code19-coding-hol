@@ -8,30 +8,33 @@ docker run -it -p 3000:3000 --name oracle-ruby-atp oracle-code-tokyo/rails-atp:1
 ```
 
 
-手動構成スクリプト　ここから下の構成は自動化済み。
+インスタンス手動構成スクリプト　ここから下の構成はDockerでは自動化済み。
 ーーー
 ```text
-bash-4.2# cd; yum -y install git
-bash-4.2# git clone git://github.com/sstephenson/rbenv.git .rbenv
-bash-4.2# echo 'export ORACLE_HOME="/usr/lib/oracle/18.5/client64"' >> ~/.bash_profile
-bash-4.2# echo 'export LD_LIBRARY_PATH="/usr/lib/oracle/18.5/client64/lib"' >> ~/.bash_profile
-bash-4.2# echo 'export TNS_ADMIN="/usr/local/etc"' >> ~/.bash_profile
-bash-4.2# echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-bash-4.2# echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-bash-4.2# exec $SHELL
-bash-4.2# git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+echo 'export ORACLE_HOME="/usr/lib/oracle/18.5/client64"' >> ~/.bash_profile
+echo 'export LD_LIBRARY_PATH="/usr/lib/oracle/18.5/client64/lib"' >> ~/.bash_profile
+echo 'export TNS_ADMIN="/usr/local/etc"' >> ~/.bash_profile
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+
+cd; yum -y install git
+git clone git://github.com/sstephenson/rbenv.git .rbenv
+echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+exec $SHELL
+git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+
 一度抜ける
 
 tamaribungonoMacBook-Pro-3:code_tokyo damarinz$ docker start oracle-ruby-atp
 tamaribungonoMacBook-Pro-3:code_tokyo damarinz$ docker exec -it oracle-ruby-atp /bin/bash —login
 
 
-bash-4.2# yum install -y gcc openssl-devel readline-devel zlib-devel sqlite-devel nodejs bzip2 make
-bash-4.2# rbenv install 2.6.3
-bash-4.2# rbenv global 2.6.3
-bash-4.2# mkdir /usr/local/app
-bash-4.2# cd /usr/local/app
-bash-4.2# gem install -N rails
+sudo yum install -y gcc openssl-devel readline-devel zlib-devel sqlite-devel nodejs bzip2 make
+rbenv install 2.6.3
+rbenv global 2.6.3
+mkdir /usr/local/app
+cd /usr/local/app
+gem install -N rails
 ```
 
 
@@ -107,11 +110,12 @@ Password: Oracle123456
 
 ```
 rails new toy_app && cd toy_app/ && rails s -b 0.0.0.0
+curl localhost:3000
 ```
 
 # Rails をOracle Autonomous DBで動かす
 
-### Gemfileに追加
+### Oracle Driver のインストール
 
 ```text
 # Use oracle as the database for Active Record
@@ -119,22 +123,11 @@ gem 'activerecord-oracle_enhanced-adapter', '~> 5.2.0'
 gem 'ruby-oci8' # only for CRuby users
 ```
 
-
-```text
-bundle install
-```
-
-
-
-
-### Oracle Driver のインストール
-
-Gemfileのsqlite3ドライバーを外してOracle Driver追記
-
+Oracle Driver追記スクリプト
 
 ```
 cd /usr/local/app/toy_app/
-sed -i -e "s/gem 'sqlite3'/\# gem 'sqlite3'/g" Gemfile
+# sed -i -e "s/gem 'sqlite3'/\# gem 'sqlite3'/g" Gemfile
 
 cat << 'EOS' | sed -i '9r /dev/stdin' Gemfile
 # Oracle drivers
@@ -145,7 +138,6 @@ EOS
 
 # Use oracle as the database for Active Record
 ```
-
 
 
 #### Oracle Tips 10,000から始まるidを1から始まるように変更
