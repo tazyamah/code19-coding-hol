@@ -30,7 +30,6 @@ RUN echo 'export LD_LIBRARY_PATH="/usr/lib/oracle/18.3/client64/lib"' >> ~/.bash
 RUN echo 'export TNS_ADMIN="/usr/local/etc"' >> ~/.bash_profile
 RUN echo 'export NLS_LANG="Japanese_Japan.AL32UTF8"' >> ~/.bash_profile
 
-AL32UTF8
 
 
 RUN yum install -y git unzip vim gcc openssl-devel readline-devel zlib-devel sqlite-devel nodejs bzip2 make

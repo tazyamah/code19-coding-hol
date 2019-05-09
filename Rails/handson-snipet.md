@@ -1,4 +1,4 @@
-Dockerスタート
+# Docker作成と実行
 
 ```text
 docker build -t oracle-code-tokyo/rails-atp:1.0 .
@@ -8,13 +8,14 @@ docker run -it -p 3000:3000 --name oracle-ruby-atp oracle-code-tokyo/rails-atp:1
 ```
 
 
-ここから下の構成は自動化済み
+手動構成スクリプト　ここから下の構成は自動化済み。
 ーーー
 ```text
 bash-4.2# cd; yum -y install git
 bash-4.2# git clone git://github.com/sstephenson/rbenv.git .rbenv
-bash-4.2# echo 'export LD_LIBRARY_PATH="/usr/lib/oracle/18.3/client64/lib"' >> ~/.bash_profile
-bash-4.2# echo 'export TNS_ADMIN="/usr/etc"' >> ~/.bash_profile
+bash-4.2# echo 'export ORACLE_HOME="/usr/lib/oracle/18.5/client64"' >> ~/.bash_profile
+bash-4.2# echo 'export LD_LIBRARY_PATH="/usr/lib/oracle/18.5/client64/lib"' >> ~/.bash_profile
+bash-4.2# echo 'export TNS_ADMIN="/usr/local/etc"' >> ~/.bash_profile
 bash-4.2# echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 bash-4.2# echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 bash-4.2# exec $SHELL
@@ -23,6 +24,8 @@ bash-4.2# git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins
 
 tamaribungonoMacBook-Pro-3:code_tokyo damarinz$ docker start oracle-ruby-atp
 tamaribungonoMacBook-Pro-3:code_tokyo damarinz$ docker exec -it oracle-ruby-atp /bin/bash —login
+
+
 bash-4.2# yum install -y gcc openssl-devel readline-devel zlib-devel sqlite-devel nodejs bzip2 make
 bash-4.2# rbenv install 2.6.3
 bash-4.2# rbenv global 2.6.3
@@ -36,16 +39,46 @@ bash-4.2# gem install -N rails
 
 
 
-# ATP接続
+#Oracle Autonomous DB(ATP)接続設定
+
+### インスタンスの場合
+
+ローカルPCからWalletのコピー
+
+```text
+scp -i ~/.ssh/code_tokyo_id_rsa Wallet_btamarirails.zip opc@132.145.115.14:
+```
+
+ターゲットインスタンスで以下実行
+
+```text
+localpc#  ssh opc@132.145.115.14 -i ~/.ssh/code_tokyo_id_rsa
+sudo cp Wallet_btamarirails.zip /usr/local/etc/
+cd /usr/local/etc/
+sudo unzip Wallet_btamarirails.zip
+sudo cp sqlnet.ora sqlnet.ora.org && cat sqlnet.ora.org | sudo sh -c "sed -e 'N;s/\?\/network\/admin/\/usr\/local\/etc/g' > sqlnet.ora"
+
+```
+
+
+### Dockerの場合
 
 別ターミナルから、docker container idを確認
-00407e328a55
 
+例　00407e328a55
+
+```text
+docker ps |grep oracle-code-tokyo/rails-atp | awk '{ print $1 }'
+docker cp Wallet_btamarirails.zip 00407e328a55:/usr/local/etc
+```
 docker ps |grep oracle-code-tokyo/rails-atp | awk '{ print $1 }'
 docker cp Wallet_btamarirails.zip 00407e328a55:/usr/local/etc
 
 複合スクリプト
+```text
 docker cp Wallet_btamarirails.zip `docker ps |grep oracle-code-tokyo/rails-atp | awk '{ print $1 }'`:/usr/local/etc
+
+```
 
 
 dockerにもどりWalletの解凍　sqlnet.oraの修正
@@ -59,21 +92,24 @@ unzip Wallet_btamarirails.zip
 cp sqlnet.ora sqlnet.ora.org && cat sqlnet.ora.org | sed -e 'N;s/\?\/network\/admin/\/usr\/local\/etc/g' > sqlnet.ora
 ```
 
-接続確認
+### Oracleへのコマンドからの接続確認
 
+```text
 sqlplus admin/Oracle123456@btamarirails_tp
 
 Password: Oracle123456
+```
 
 
 
-# Rails動作確認
+
+### Rails動作確認
 
 ```
 rails new toy_app && cd toy_app/ && rails s -b 0.0.0.0
 ```
 
-# Rails をOracleで動かす
+# Rails をOracle Autonomous DBで動かす
 
 ### Gemfileに追加
 
@@ -112,11 +148,13 @@ EOS
 
 
 
-##### Oracle Tips
+#### Oracle Tips 10,000から始まるidを1から始まるように変更
+
 https://doruby.jp/users/tips4tips/entries/RailsでOracle～-導入と文字列の扱いについて
 
 
-idを1から
+
+Oracleのデフォルトではidが10000から始まるので、1から始まるように設定変更
 ```
 
 cat <<EOS > config/initializers/oracle.rb
@@ -177,6 +215,7 @@ production:
 EOS
 ```
 
+### Rails + ATPで実際にアプリを動かす
 
 ```text
 rails generate scaffold User name:string email:string
@@ -185,6 +224,8 @@ rails db:migrate
 rails s -b 0.0.0.0
 ```
 
+### Tips
 
-Tip：順序が自動生成されているので、作り直しのときにSQL Developerから削除が必要
+- 順序が自動生成されているので、DB作り直しのときにSQL Developerから削除が必要
+- 
 
