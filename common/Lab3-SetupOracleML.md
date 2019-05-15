@@ -1,6 +1,6 @@
 # Oracle MLの設定
 
-###　
+###　ユーザーの作成
 
 サービスコンソールを開きます。画面がポップアップするので、ブラウザでポップアップを許可してください。
 
@@ -34,11 +34,12 @@ Manage Oracle Usersのメニューを開きます
 ![](images/Oracle_Machine_Learning_User_Administration___user_1.png)
 
 
-
+### Notebookへのログイン
 
 ユーザーができたら右上の「家」のアイコンを押して、ノートブックに移動します。
 
-[](images/Oracle_Machine_Learning_User_Administration___user.png)
+![](images/Oracle_Machine_Learning_User_Administration___user.png)
+
 
 
 
