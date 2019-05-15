@@ -61,7 +61,7 @@ sshにて仮想マシンへログインし、Walletファイルを `/usr/local/e
 
 ```bash
 $ sudo cp Wallet_demo.zip /usr/local/etc/
-$ sudo unzip Wallet_mugajin.zip -d /usr/local/etc
+$ sudo unzip Wallet_demo.zip -d /usr/local/etc
 ```
 
 ## 3. データベースの接続設定を記載
