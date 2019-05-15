@@ -22,10 +22,8 @@ CREATE SEQUENCE micropost_seq
 
 以下の URL にアクセスしてログインし、Oracle Maven Repositoryのライセンスを確認する。  
 ライセンスを読み、同意いただける場合は [Accept License Agreement] を選択する。
-
-https://www.oracle.com/webapps/maven/register/license.html
-
-プロファイルをお持ちでない方は、ログイン画面の [プロファイルの作成] からプロファイルを作成してください。
+https://www.oracle.com/webapps/maven/register/license.html  
+※プロファイルをお持ちでない方は、ログイン画面の [プロファイルの作成] からプロファイルを作成してください。
 
 仮想マシンへログインし、Mavenのsettings.xmlファイルを修正する。
 
@@ -112,6 +110,7 @@ $ sudo -E java -jar demo-0.0.1-SNAPSHOT.jar
 
 ## 6. 起動確認
 
-「5. アプリケーションを実行する」にてアプリケーションが80番ボートにて起動しているため、ブラウザから以下URLへアクセスすることで、サンプルアプリの動作確認が実行できる。
+「5. アプリケーションを実行する」にてアプリケーションが80番ボートにて起動しているため、ブラウザから以下URLへアクセスすることで、サンプルアプリの動作確認が実行できる。  
+
 `http://[仮想マシンのPublic IP]/`
 
