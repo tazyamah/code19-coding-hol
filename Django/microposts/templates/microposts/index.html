@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Django</title>
+</head>
+
+<body>
+  <a href="/new/">登録</a>
+  {% if micropost_list %}
+    <table>
+      <tr>
+        <td>id</td>
+        <td>content</td>
+        <td></td>
+      </tr>
+      {% for micropost in micropost_list %}
+      <tr>
+        <td><a href="/{{ micropost.id }}/">{{ micropost.id }}</a></td>
+        <td>{{ micropost.content }}</td>
+        <td><a href="/delete/{{ micropost.id }}/">削除</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+      <p>No microposts are available.</p>
+  {% endif %}
+</body>
+</html>
