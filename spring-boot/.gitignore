@@ -3,6 +3,8 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
+security
+
 *.iml
 # User-specific stuff
 .idea/**/workspace.xml
@@ -74,8 +76,6 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 ### Java template
 # Compiled class file
-*.class
-
 # Log file
 *.log
 

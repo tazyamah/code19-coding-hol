@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Micropost</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+          crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+    <h1>Micropost登録</h1>
+
+    <form th:action="@{/}" method="post" th:object="${content}">
+        <label>
+            <input type="text" th:field="*{value}"/>
+        </label>
+        <span class="text-danger" th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+        <input type="submit" value="Submit"/>
+    </form>
+
+</div>
+</body>
+</html>
