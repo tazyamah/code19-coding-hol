@@ -1,10 +1,10 @@
-# Oracle接続のRails環境構築について
+# はじめに
 
-環境構築のガイドです。
+こちらのスクリプトは、Docker環境でATPを利用したRailsの設定となります。
 
 ## Docker作成と実行
 
-サンプルDockerfileは同一ディレクトリにあります。
+
 
 ```text
 docker build -t oracle-code-tokyo/rails-atp:1.0 .
@@ -14,12 +14,8 @@ docker run -it -p 3000:3000 --name oracle-ruby-atp oracle-code-tokyo/rails-atp:1
 ```
 
 
-## インスタンス手動構成スクリプト
-
-参考です。ここから下の構成はDocker及びカスタムイメージでは設定済み。
-
-
-
+インスタンス手動構成スクリプト　ここから下の構成はDockerでは自動化済み。
+ーーー
 ```text
 
 echo 'export ORACLE_HOME="/usr/lib/oracle/18.5/client64"' >> ~/.bash_profile
@@ -35,8 +31,8 @@ git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-buil
 
 一度抜ける
 
-localPC$ docker start oracle-ruby-atp
-localPC$ docker exec -it oracle-ruby-atp /bin/bash —login
+tamaribungonoMacBook-Pro-3:code_tokyo damarinz$ docker start oracle-ruby-atp
+tamaribungonoMacBook-Pro-3:code_tokyo damarinz$ docker exec -it oracle-ruby-atp /bin/bash —login
 
 
 sudo yum install -y gcc openssl-devel readline-devel zlib-devel sqlite-devel nodejs bzip2 make
@@ -52,7 +48,7 @@ gem install -N rails
 
 
 
-# Oracle Autonomous DB(ATP)接続設定
+#Oracle Autonomous DB(ATP)接続設定
 
 ### インスタンスの場合
 
@@ -65,7 +61,7 @@ scp -i ~/.ssh/code_tokyo_id_rsa Wallet_btamarirails.zip opc@132.145.115.14:
 ターゲットインスタンスで以下実行
 
 ```text
-localPC#  ssh opc@132.145.115.14 -i ~/.ssh/code_tokyo_id_rsa
+localpc#  ssh opc@132.145.115.14 -i ~/.ssh/code_tokyo_id_rsa
 sudo cp Wallet_btamarirails.zip /usr/local/etc/
 cd /usr/local/etc/
 sudo unzip Wallet_btamarirails.zip
@@ -84,10 +80,10 @@ sudo cp sqlnet.ora sqlnet.ora.org && cat sqlnet.ora.org | sudo sh -c "sed -e 'N;
 docker ps |grep oracle-code-tokyo/rails-atp | awk '{ print $1 }'
 docker cp Wallet_btamarirails.zip 00407e328a55:/usr/local/etc
 ```
+docker ps |grep oracle-code-tokyo/rails-atp | awk '{ print $1 }'
+docker cp Wallet_btamarirails.zip 00407e328a55:/usr/local/etc
 
-
-参考：複合スクリプト
-
+複合スクリプト
 ```text
 docker cp Wallet_btamarirails.zip `docker ps |grep oracle-code-tokyo/rails-atp | awk '{ print $1 }'`:/usr/local/etc
 
@@ -106,8 +102,6 @@ cp sqlnet.ora sqlnet.ora.org && cat sqlnet.ora.org | sed -e 'N;s/\?\/network\/ad
 ```
 
 ### Oracleへのコマンドからの接続確認
-
-sqlplusで確認をします。
 
 ```text
 sqlplus admin/Oracle123456@btamarirails_tp
@@ -129,9 +123,7 @@ curl localhost:3000
 
 ### Oracle Driver のインストール
 
-GemfileにOracle用のGemを導入し、bundle installします。
-
-``` ruby
+```text
 # Use oracle as the database for Active Record
 gem 'activerecord-oracle_enhanced-adapter', '~> 5.2.0'
 gem 'ruby-oci8' # only for CRuby users
@@ -139,7 +131,7 @@ gem 'ruby-oci8' # only for CRuby users
 
 Oracle Driver追記スクリプト
 
-``` bash
+```
 cd /usr/local/app/toy_app/
 # sed -i -e "s/gem 'sqlite3'/\# gem 'sqlite3'/g" Gemfile
 
@@ -161,8 +153,7 @@ https://doruby.jp/users/tips4tips/entries/RailsでOracle～-導入と文字列�
 
 
 Oracleのデフォルトではidが10000から始まるので、1から始まるように設定変更
-
-``` ruby
+```
 
 cat <<EOS > config/initializers/oracle.rb
 # It is recommended to set time zone in TZ environment variable so that the same timezone will be used by Ruby and by Oracle session
@@ -186,14 +177,13 @@ EOS
 ```
 
 gemを有効化
-
 ```
 bundle install
 ```
 
 database.ymlを修正 tnsname.oraのtp設定を記入
 
-``` yaml
+```
 mv config/database.yml config/database.yml.org
 
 cat <<EOS > config/database.yml
@@ -234,6 +224,6 @@ rails s -b 0.0.0.0
 
 ### Tips
 
-- 順序が自動生成されているので、DB作り直しのときにSQL Developerから削除が必要でした。
-- rails db:migrate:resetがうまくいかない場合があります。その場合もSQL Developerから処理します。
+- 順序が自動生成されているので、DB作り直しのときにSQL Developerから削除が必要
+- 
 
