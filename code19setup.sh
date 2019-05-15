@@ -1,3 +1,16 @@
+# locale
+sudo sh -c 'echo -e "LANG=ja_JP.utf-8\nLC_ALL=ja_JP.utf-8" > /etc/environment'
+sudo localectl set-locale LANG=ja_JP.utf8
+
+# firewall
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd --permanent --add-port=8080/tcp
+sudo firewall-cmd --permanent --add-port=3000/tcp
+sudo firewall-cmd --permanent --add-port=8000/tcp
+sudo firewall-cmd --permanent --add-port=443/tcp
+sudo firewall-cmd --reload
+
+
 # rails
 sudo curl -o /etc/yum.repos.d/public-yum-ol7.repo https://yum.oracle.com/public-yum-ol7.repo
 sudo yum-config-manager --enable ol7_oracle_instantclient
@@ -46,11 +59,9 @@ source ~/.bash_profile
 composer global require laravel/installer
 composer global require yajra/laravel-oci8:v5.8
 composer create-project --prefer-dist "laravel/laravel=5.8.16" demo
-#pecl install oci8
-#(enter)
-#echo "extension=oci8.so" >> /home/opc/.phpenv/versions/7.1.29/etc/php.ini
+pecl install oci8 <<<''
+echo "extension=oci8.so" >> /home/opc/.phpenv/versions/7.1.29/etc/php.ini
 composer require yajra/laravel-oci8:v5.8
-composer require 'laralib/l5scaffold' --dev
 
 # django
 sudo yum -y install gcc zlib-devel bzip2 bzip2-devel readline readline-devel sqlite sqlite-devel openssl openssl-devel git
@@ -58,6 +69,7 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bash_profile
 echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
 source ~/.bash_profile
+pyenv install 3.6.7
 pyenv global 3.6.7
 pyenv rehash
 pip install --upgrade pip
@@ -65,15 +77,10 @@ pip install django
 pip install cx_oracle
 
 # spring-boot
-wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/12.0.1+12/69cfe15208a647278a19ef0990eea691/jdk-12.0.1_linux-x64_bin.rpm
-sudo yum -y localinstall jdk-12.0.1_linux-x64_bin.rpm
-
-# firewall
-sudo firewall-cmd --permanent --add-port=80/tcp
-sudo firewall-cmd --permanent --add-port=8080/tcp
-sudo firewall-cmd --permanent --add-port=3000/tcp
-sudo firewall-cmd --permanent --add-port=8000/tcp
-sudo firewall-cmd --permanent --add-port=443/tcp
-sudo firewall-cmd --reload
-
+sudo yum -y install java-11-openjdk-devel
+sudo yum -y install maven
+sudo alternatives --set java /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.0.1.el7_6.x86_64/bin/java
+echo 'export JAVA_HOME="/usr/lib/jvm/java-11-openjdk"' >> ~/.bash_profile
+source ~/.bash_profile
+sudo wget http://central.maven.org/maven2/org/apache/maven/wagon/wagon-http/2.8/wagon-http-2.8-shaded.jar -P /usr/share/maven/lib/ext/
 
