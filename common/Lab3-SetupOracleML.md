@@ -20,7 +20,7 @@ Manage Oracle Usersのメニューを開きます
 
 ユーザーの追加を行います。
 
-![](images/Oracle_Machine_Learning_User_Administration___ユーザー_2.png)
+![](images/Oracle_Machine_Learning_User_Administration___user_2.png)
 
 
 
@@ -31,14 +31,14 @@ Manage Oracle Usersのメニューを開きます
 - ユーザー名: app
 - パスワード: Oracle123456
 
-![](images/Oracle_Machine_Learning_User_Administration___ユーザー_1.png)
+![](images/Oracle_Machine_Learning_User_Administration___user_1.png)
 
 
 
 
 ユーザーができたら右上の「家」のアイコンを押して、ノートブックに移動します。
 
-[](images/Oracle_Machine_Learning_User_Administration___ユーザー.png)
+[](images/Oracle_Machine_Learning_User_Administration___user.png)
 
 
 
@@ -50,7 +50,7 @@ Manage Oracle Usersのメニューを開きます
 
 ホーム画面の、「SQL文の実行」をクリックします。
 
-![](images/Oracle_Machine_Learning___ホーム.png)
+![](images/Oracle_Machine_Learning___home.png)
 
 
 
