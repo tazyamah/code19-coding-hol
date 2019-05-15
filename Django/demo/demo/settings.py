@@ -25,7 +25,7 @@ SECRET_KEY = '%+fys)q@zlu7djgq1nbb^1#g2h@r3g(nteuorxcl2oon^okzkf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,8 +76,10 @@ WSGI_APPLICATION = 'demo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'CODE19SUZUKI_TP',
+        'USER': 'ADMIN',
+        'PASSWORD': 'Oracle123456'
     }
 }
 

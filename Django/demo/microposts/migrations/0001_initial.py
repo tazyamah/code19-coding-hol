@@ -12,13 +12,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Micropost',
+            name='micropost',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('micropost_id', models.CharField(max_length=5, unique=True)),
-                ('title', models.CharField(max_length=50)),
-                ('body', models.TextField()),
-                ('update_date', models.DateTimeField(verbose_name='date published')),
+                ('content', models.TextField()),
             ],
         ),
     ]
