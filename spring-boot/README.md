@@ -50,23 +50,7 @@ $ vim ~/.m2/settings.xml
 参考：本番環境にて利用する場合は、パスワードを暗号化されることをお勧めします。  
 http://maven.apache.org/guides/mini/guide-encryption.html
 
-## 2. Walletの取得・配置
-
-Autonomous DBから取得したWalletファイルを仮想マシンへ転送する。
-
-```bash
-# scp -i ~/.ssh/code_tokyo_id_rsa Wallet_demo.zip opc@xx.xx.xx.xx:~
-```
-
-sshにて仮想マシンへログインし、Walletファイルを `/usr/local/etc/` ディレクトリへ解凍する。  
-この `/usr/local/etc/` は環境変数 `TNS_ADMIN` に設定している。（TODO：参照を記載）
-
-```bash
-$ sudo cp Wallet_demo.zip /usr/local/etc/
-$ sudo unzip Wallet_mugajin.zip -d /usr/local/etc
-```
-
-## 3. データベースの接続設定を記載
+## 2. データベースの接続設定を記載
 
 `code19-coding-hol/spring-boot/src/main/resources/application.properties` を以下の通り変更する。
 
@@ -90,7 +74,7 @@ spring.datasource.password=quu6nMQHRjKC43H
 server.port=80
 ```
 
-## 4. 実行jarファイルを作成する
+## 3. 実行jarファイルを作成する
 
 `code19-coding-hol/spring-boot` ディレクトリへ移動し、Mavenのパッケージコマンドを実行して、実行用のjarファイルを作成する。
 
@@ -101,7 +85,7 @@ $ mvn package
 
 これにより、実行用のjarファイルが `code19-coding-hol/spring-boot/target` ディレクトリに生成される。
 
-## 5. アプリケーションを実行する
+## 4. アプリケーションを実行する
 
 `code19-coding-hol/spring-boot/target` ディレクトリのjarファイルを実行する。  
 Walletファイルを解凍したディレクトリパスの `TNS_ADMIN` の環境変数を利用するため、 `-E` オプションを使用して環境変数を引き継ぐこと。
@@ -110,7 +94,7 @@ Walletファイルを解凍したディレクトリパスの `TNS_ADMIN` の環�
 $ sudo -E java -jar demo-0.0.1-SNAPSHOT.jar
 ```
 
-## 6. 起動確認
+## 5. 起動確認
 
 「5. アプリケーションを実行する」にてアプリケーションが80番ボートにて起動しているため、ブラウザから以下URLへアクセスすることで、サンプルアプリの動作確認が実行できる。
 `http://[仮想マシンのPublic IP]/`
