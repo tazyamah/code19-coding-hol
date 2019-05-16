@@ -148,6 +148,12 @@ remote%
 
 2. アクセスしたインスタンスで、以下のようにWalletファイルを配置します。
 
+
+![](images/Oracle_Cloud_Infrastructure_10.png)
+
+
+
+
 Walletのコピー
 ```sh
 localpc% scp -i <YourIdentitySecretKey> <YourWallet>.zip opc@<your_innstance_address>:
@@ -183,6 +189,12 @@ echo 'export TNS_ADMIN="/usr/local/etc"' >> ~/.bash_profile
 
 
 
+作成したAutonomous DBのインスタンスのTNS nameを確認し、TP用のTNS名をメモします。
+
+![](images/Oracle_Cloud_Infrastructure_9.png)
+
+
+sqlplusのコマンドで、
 
 例：
 ```text
