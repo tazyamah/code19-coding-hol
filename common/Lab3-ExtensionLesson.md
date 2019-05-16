@@ -27,6 +27,7 @@ Autonomous DBではインスタンスを停止することでOCPU課金を停止
 
 Stopボタンを押します。
 
+
 ![](images/Oracle_Cloud_Infrastructure_19.png)
 
 
