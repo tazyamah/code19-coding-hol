@@ -204,7 +204,7 @@ sqlplusのコマンドで、
 
 例：
 ```text
-remote% sqlplus admin@<インスタンスTNS名で_tpで終わるもの>
+remote% /usr/lib/oracle/18.3/client64/bin/sqlplus admin@<インスタンスTNS名で_tpで終わるもの>
 
 Password: Oracle123456(インスタンス作成時にadmin設定したパスワード）
 ```
