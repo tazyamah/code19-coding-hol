@@ -207,7 +207,7 @@ default: &default
 
 development:
   <<: *default
-  database: (description=(address=(protocol=tcps)(port=1522)(host=adb.ap-tokyo-1.oraclecloud.com))(connect_data=(service_name=sya6vphk3pzlkhq_btamarirails_tp.atp.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-tokyo-1.oraclecloud.com,OU=Oracle ADB TOKYO,O=Oracle Corporation,L=Redwood City,ST=California,C=US")))
+  database: (description=(address=(protocol=tcps)(port=1522)(host=adb.ap-tokyo-1.oraclecloud.com))(connect_data=(service_name=hogehoge_btamarirails_tp.atp.oraclecloud.com))(security=(ssl_server_cert_dn="CN=adb.ap-tokyo-1.oraclecloud.com,OU=Oracle ADB TOKYO,O=Oracle Corporation,L=Redwood City,ST=California,C=US")))
 
 test:
   adapter: sqlite3
