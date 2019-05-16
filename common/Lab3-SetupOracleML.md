@@ -1,4 +1,39 @@
-# Oracle MLの設定
+# インスタンスをスケールアップ・スケールダウンする
+
+Autonomous DBは
+
+ScaleUp/Downのボタンを押します。CPU数を2にしてみましょう。CPUは時間課金(約201円)です。
+
+
+![](images/Oracle_Cloud_Infrastructure_15.png)
+
+
+![](images/Oracle_Cloud_Infrastructure_14.png)
+
+
+![](images/Oracle_Cloud_Infrastructure_13.png)
+
+
+# インスタンスを停止する・再開する
+
+Autonomous DBではインスタンスを停止することでOCPU課金を停止することができます。開発環境であれば夜間や休日など未利用時は停止しておくことで料金の節約ができます。
+
+※ストレージ課金は、インスタンスを削除しないかぎり発生します。
+
+![](images/Oracle_Cloud_Infrastructure_19.png)
+
+
+![](images/Oracle_Cloud_Infrastructure_18.png)
+
+
+![](images/Oracle_Cloud_Infrastructure_17.png)
+
+
+![](images/Oracle_Cloud_Infrastructure_16.png)
+
+
+
+# Oracle MLを使う
 
 ### ユーザーの作成
 
