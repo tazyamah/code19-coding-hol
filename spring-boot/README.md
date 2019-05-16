@@ -29,6 +29,7 @@ https://www.oracle.com/webapps/maven/register/license.html
 
 ```bash
 # ssh -i ~/.ssh/code_tokyo_id_rsa opc@xx.xx.xx.xx
+$ mkdir ~/.m2
 $ cp code19-coding-hol/spring-boot/maven-setting/settings.xml ~/.m2/
 $ vim ~/.m2/settings.xml
 ```
@@ -89,6 +90,7 @@ $ mvn package
 Walletファイルを解凍したディレクトリパスの `TNS_ADMIN` の環境変数を利用するため、 `-E` オプションを使用して環境変数を引き継ぐこと。
 
 ```bash
+$ cd code19-coding-hol/spring-boot/target
 $ sudo -E java -jar demo-0.0.1-SNAPSHOT.jar
 ```
 
