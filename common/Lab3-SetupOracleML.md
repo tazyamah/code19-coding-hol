@@ -1,35 +1,74 @@
-# インスタンスをスケールアップ・スケールダウンする
+# ライフサイクル管理
 
-Autonomous DBは
+## インスタンスをスケールアップ・スケールダウンする
 
-ScaleUp/Downのボタンを押します。CPU数を2にしてみましょう。CPUは時間課金(約201円)です。
+Autonomous DBは簡単なコンソール操作・コマンド操作やAPI経由での
+
+ScaleUp/Downのボタンを押します。CPU数を2にしてみましょう。CPUは時間課金(新規ライセンスで約201円、BYOLで約58円)です。
 
 
 ![](images/Oracle_Cloud_Infrastructure_15.png)
 
+CPUカウントを2に増やし、Updateボタンを押します
 
 ![](images/Oracle_Cloud_Infrastructure_14.png)
+
+画面がScaling in processになります。実行中のSQLには影響を与えません。数分でスケールアップされます。スケールダウンも同様です。
 
 
 ![](images/Oracle_Cloud_Infrastructure_13.png)
 
 
-# インスタンスを停止する・再開する
+## インスタンスを停止する・再開する
 
 Autonomous DBではインスタンスを停止することでOCPU課金を停止することができます。開発環境であれば夜間や休日など未利用時は停止しておくことで料金の節約ができます。
 
 ※ストレージ課金は、インスタンスを削除しないかぎり発生します。
 
+Stopボタンを押します。
+
 ![](images/Oracle_Cloud_Infrastructure_19.png)
 
 
+確認画面でもう一度Stopを押します
+
 ![](images/Oracle_Cloud_Infrastructure_18.png)
 
+ステータスがstoppingになります。
 
 ![](images/Oracle_Cloud_Infrastructure_17.png)
 
 
+stoppedになりました。
+
 ![](images/Oracle_Cloud_Infrastructure_16.png)
+
+## インスタンスを削除する
+
+課金を完全に停止するためには、インスタンスを削除します。
+
+メニューからTerminateを選択します。
+
+![](images/Oracle_Cloud_Infrastructure_23.png)
+
+
+確認のため、DB名を入力します。
+
+![](images/Oracle_Cloud_Infrastructure_22.png)
+
+## DB接続元を制限する
+
+Autonomous DBは強力な暗号Walletで通信データを暗号化していますが、特定のIPアドレスからの接続のためのACLを用意しています。
+
+Access Control Listを押します
+
+![](images/Oracle_Cloud_Infrastructure_21.png)
+
+
+接続元のIP Address/CIDRを入力します。
+
+![](images/Oracle_Cloud_Infrastructure_20.png)
+
 
 
 

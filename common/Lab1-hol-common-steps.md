@@ -50,7 +50,7 @@
     - **DATABASE NAME** - orcl
     - **CPUコア数** - 1
     - **ストレージ(TB)** - 1
-    - **パスワード** - 任意のパスワード(後で使用します)
+    - **パスワード** - 今回のハンズオンでは「Oracle123456」を利用します。もしくは12文字以上の任意のパスワード。
     - **ライセンス・タイプ** - SUBSCRIBE TO NEW DATABASE SOFTWARE LICENSES AND THE DATABASE CLOUD SERVICE を選択
 
 ![](images/Oracle_Cloud_Infrastructure_7.png)
