@@ -115,3 +115,47 @@ $ sudo -E java -jar demo-0.0.1-SNAPSHOT.jar
 「5. アプリケーションを実行する」にてアプリケーションが80番ボートにて起動しているため、ブラウザから以下URLへアクセスすることで、サンプルアプリの動作確認が実行できる。
 `http://[仮想マシンのPublic IP]/`
 
+
+# 補足. 仮想マシンの環境構築について
+
+本ハンズオンでは、アプリケーションを実行する仮想マシンにカスタムイメージを利用する。  
+
+ (TODO : 記載)
+カスタムイメージはOracle Linux 7のOSイメージに対して、`aa` のスクリプトを実行して作成した。
+- ベースイメージのID : ``
+
+ここでは、 `aa` のスクリプトのうち、spring bootを稼働させるために必要となる設定を抜粋して記載する。
+
+本ハンズオンではJDKのバージョンやMavenの認証設定などを統一させるため、仮想マシンを本番環境兼ビルド環境として利用する。  
+それにより、MavenやGitなど、ビルド環境にのみ必要なツールのインストールや設定もスクリプトにて実行している。  
+
+```shell
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd --permanent --add-port=443/tcp
+sudo firewall-cmd --reload
+
+sudo yum -y install git
+sudo yum -y install maven
+sudo yum -y install java-11-openjdk-devel
+sudo alternatives --set java /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.0.1.el7_6.x86_64/bin/java
+
+echo 'export TNS_ADMIN="/usr/local/etc/"' >> ~/.bash_profile
+echo 'export JAVA_HOME="/usr/lib/jvm/java-11-openjdk"' >> ~/.bash_profile
+source ~/.bash_profile
+
+sudo wget http://central.maven.org/maven2/org/apache/maven/wagon/wagon-http/2.8/wagon-http-2.8-shaded.jar -P /usr/share/maven/lib/ext/
+```
+
+jarファイルを実行するために必要な設定のみ抜粋したものは、以下の通り。
+
+```shell
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd --permanent --add-port=443/tcp
+sudo firewall-cmd --reload
+
+sudo yum -y install java-11-openjdk-devel
+sudo alternatives --set java /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.0.1.el7_6.x86_64/bin/java
+
+echo 'export TNS_ADMIN="/usr/local/etc/"' >> ~/.bash_profile
+```
+
