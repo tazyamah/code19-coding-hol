@@ -21,6 +21,9 @@
         `https://objectstorage.ap-tokyo-1.oraclecloud.com/n/orasejapan/b/code19-coding-hol/o/code19-coding-hol`
     - **イメージ・タイプ** - OCI を選択
     - **起動モード** - グレーアウトされるので選択不要
+    
+![](images/Oracle_Cloud_Infrastructure_2.png)
+
 
 インポート中というステータスの画面が表示されていたら、バックグラウンドで アプリケーションの設定済イメージのインポート作業が開始されていますので、別の画面へと遷移してしまってもOKです。カスタム・イメージのインポートが完了すると、コンソール上の状態が **使用可能** になります。
 完了までにはしばらく時間がかかるので、その間に次の作業を開始してしまいしょう。
