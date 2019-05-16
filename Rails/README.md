@@ -191,7 +191,7 @@ gemを有効化
 bundle install
 ```
 
-database.ymlを修正 tnsname.oraのtp設定を記入
+database.ymlを修正 tnsname.oraのtp設定を記入(二行にまたがっているので注意)
 
 ``` yaml
 mv config/database.yml config/database.yml.org
@@ -200,8 +200,8 @@ cat <<EOS > config/database.yml
 default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   adapter: oracle_enhanced
-  username: admin
-  password: Oracle123456
+  username: USERNAME
+  password: PASSWORD
   timeout: 5000
   encoding: utf8
 
@@ -226,10 +226,10 @@ EOS
 ### Rails + ATPで実際にアプリを動かす
 
 ```text
-rails generate scaffold User name:string email:string
-rails db:migrate
+bundle install rails generate scaffold User name:string email:string
+bundle install rails db:migrate
 
-rails s -b 0.0.0.0
+bundle install rails s -b 0.0.0.0
 ```
 
 ### Tips
