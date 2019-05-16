@@ -1,12 +1,19 @@
+# 注意点
+
+vendorディレクトリと.envをリポジトリに含めています。
+
+そのため、 `composer install` や `cp .env{.example,}` のたぐいは今回は必要ありません
+
 # Oracle Autonomous DB(ATP)接続設定
 
-`laravel/demo/config/database.php` のデータベース項目を以下のように書き換える ※今回は書換済
+`laravel/demo/config/database.php` のデータベース項目を以下のように書き換える ※今回は書換済&envがあればやらなくても良い
 
 ```php
 'default' => env('DB_CONNECTION', 'oracle'),
 ```
 
 また、 `laravel/demo/config/oracle.php` に接続情報を書き込む
+※本来はenv経由での記載が望ましいかもしれません
 
 ```php
         'driver'         => 'oracle',
