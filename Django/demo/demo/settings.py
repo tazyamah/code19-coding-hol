@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'demo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'CODE19SUZUKI_TP',
-        'USER': 'ADMIN',
-        'PASSWORD': 'Oracle123456'
+        'NAME': 'XXXXXXXXXX_TP',
+        'USER': 'USERNAME',
+        'PASSWORD': 'PASSWORD'
     }
 }
 
