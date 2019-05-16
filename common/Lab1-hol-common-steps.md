@@ -103,6 +103,10 @@ Autonomous Database は、データベースのソフトウェアとしては通
 1. SQL DeveloperまたはOracle MLの画面を開きます
 2. 講師の案内もしくはドキュメントの記載をトレースします
 
+# Autonomous Databaseについて
+
+イメージインポート完了待ちの間、講師よりプレゼンテーションを行います。
+
 
 ## アプリケーション実行用のインスタンス作成と Autonomous Database への接続確認
 
