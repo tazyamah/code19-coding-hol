@@ -35,7 +35,10 @@
 今回は、OCIのコンソールから Autnomous Database を作成していきましょう。
 
 ### 作業ステップ
-1. コンソールメニューから **Autonoous Transaction Processing** を選択し、**Autonoous Databaseの作成** ボタンを押します
+1. コンソールメニューから **Autonomous Transaction Processing** を選択し、**Autonoous Databaseの作成** ボタンを押します
+
+![](images/Oracle_Cloud_Infrastructure_6.png)
+
 
 1. 立ち上がったウィンドウに以下の項目を入力し、下部の **Autonomous Databaseの作成** ボタンを押します
     - **ワークロード・タイプ** - AUTONOMOUS TRANSACTION PROCESSING を選択
@@ -45,7 +48,11 @@
     - **CPUコア数** - 1
     - **ストレージ(TB)** - 1
     - **パスワード** - 任意のパスワード(後で使用します)
-    - **ライセンス・タイプ** - SUBSCRIBE TO NEW DATABASE SOFTWARE LICENSES AND THE DATABASE CLOUD SERVICE を洗濯
+    - **ライセンス・タイプ** - SUBSCRIBE TO NEW DATABASE SOFTWARE LICENSES AND THE DATABASE CLOUD SERVICE を選択
+
+![](images/Oracle_Cloud_Infrastructure_7.png)
+![](images/Oracle_Cloud_Infrastructure_8.png)
+
 
 バックグラウンドで Autnomous Database の作成が開始します。作成にはしばらく時間がかかるので、その間に次の作業を開始してしまいしょう。Autonomous Database の作成が完了すると、コンソール上の状態が **使用可能** になります。
 
@@ -66,9 +73,15 @@
 
     [^1]:名前は識別しやすい名前をつけてください。VNC名は一意である必要はありませんが、同じ名前をつけた場合にコンソールでの識別が難しくなります。一度つけた名前は、コンソールからは名前を変更できません。(APIを利用すると名前を変更できます)
 
+![](images/Oracle_Cloud_Infrastructure_4.png)
+
+
 1. すべてのアクションが正常に実行されたことをメッセージで確認し **閉じる** ボタンを押しウィンドウを閉じます
 
 1. コンソール上に作成した仮想クラウド・ネットワークが表示され、状態が **使用可能** になっていることを確認します
+
+
+
 
 以上で仮想クラウド・ネットワークの作成は完了です。
 
@@ -76,14 +89,17 @@
 ## クラウドに仮想ネットワーク(VCN)を作る
 
 
-## DBへのデータロード
+## DBへのデータロード(Optional)
+
+※　このプロセスは、言語別の講師から指定があったときに実行してください。
 
 アプリケーションの実行環境インスタンスを作成する前に、先ほど作成した Autnomous Database に、サンプルのスキーマとデータをロードしてしまいましょう。
 Autonomous Database は、データベースのソフトウェアとしては通常の Oracle Database 18ｃ と同じように使用できますので、もし Oracle Database に詳しい方であればいつもの方法でデータをロードすることができますが、今回はクラウド上のコンソールに付属するツールを使ってデータを取り込んでみましょう。
 
 ### 作業ステップ
 
-1.
+1. SQL DeveloperまたはOracle MLの画面を開きます
+2. 講師の案内もしくはドキュメントの記載をトレースします
 
 
 ## アプリケーション実行用のインスタンス作成と Autonomous Database への接続確認
@@ -96,6 +112,9 @@ Autonomous Database は、データベースのソフトウェアとしては通
 
 1. イメージ欄の右端の **・・・** メニューをマウスオーバーし、 **インスタンスの作成** を選択します
 
+    ![](images/Oracle_Cloud_Infrastructure_3.png)
+
+
 1. 立ち上がったウィンドウに以下の項目を入力し、下部の **作成** ボタンを押します
     - **インスタンスの命名** - 任意の名前
     - **インスタンスの可用性ドメインを選択します** - 可用性ドメイン1 を選択
@@ -106,15 +125,71 @@ Autonomous Database は、データベースのソフトウェアとしては通
     - **SSHキーの追加** - **ファイルの選択** ボタンを押して予め作成しておいた鍵ペアのうち公開鍵(通常は id_rsa.pub )を選択
     - **仮想クラウド・ネットワーク** - 先ほどのステップで作成したVCNを選択
     - **サブネット** - 任意のパブリック・サブネットを選択
+    
+
 
 1. インスタンスの作成処理がバックグラウンドで作成されます。しばらくするとインスタンスの状態が **実行中** になり、使用できるようになります
 
-1. 作成したインスタンスにSSHでアクセスします。
+    ![](images/Oracle_Cloud_Infrastructure_5.png)
+
+
+1. 作成したインスタンスにSSHでアクセス確認します。
 インスタンスの詳細画面の **プライマリVNIC情報** セクションにある **パブリックIPアドレス** 欄のIPアドレスをコピーし、そこに対してローカルのPCからSSHでアクセスします。アクセスする際の認証には、インスタンスを作成する際に登録したSSH公開鍵のペアとなる秘密鍵(通常はid_rsaという名前です)を使用してください。秘密鍵にパスコードを指定している場合はそちらも適切に指定してください。
 
-1. アクセスしたインスタンスで、
+アクセスするユーザーは　opc  です。
+
+```text
+localpc% ssh -i <your_secret_key> opc@<your_innstance_address>
+
+remote%
+```
 
 
+
+2. アクセスしたインスタンスで、以下のようにWalletファイルを配置します。
+
+Walletのコピー
+```sh
+localpc% scp -i <YourIdentitySecretKey> <YourWallet>.zip opc@<your_innstance_address>:
+```
+
+Walletの配置
+```text
+remote% sudo cp <YourWallet>.zip /usr/local/etc/
+remote% cd /usr/local/etc/
+remote% sudo unzip <YourWallet>.zip
+```
+
+3. sqlnet.oraのWallet配置先の記載を現状にあわせて修正します。
+
+```text
+remote% sudo cp sqlnet.ora sqlnet.ora.org && cat sqlnet.ora.org | sudo sh -c "sed -e 'N;s/\?\/network\/admin/\/usr\/local\/etc/g' > sqlnet.ora"
+```
+
+参考：環境変数設定（今回のインスタンスでは事前設定済み）
+
+- ファイルの配置先は環境変数TNS_ADMINで設定します
+- LD_LIBRARY_PATHにOracle client libの位置を与えます。
+
+※ MacOSの場合はLD_LIBRARY_PATHの設定が制限されていますので、インスタンスまたはDocker上Linuxでの試用を推奨します。
+
+```text
+ハンズオン環境設定済み：
+echo 'export LD_LIBRARY_PATH="/usr/lib/oracle/18.5/client64/lib"' >> ~/.bash_profile
+echo 'export TNS_ADMIN="/usr/local/etc"' >> ~/.bash_profile
+```
+
+4. sqlplusからのAutonomous DB接続確認
+
+
+
+
+例：
+```text
+remote% sqlplus admin@<インスタンス名>_tp
+
+Password: Oracle123456(インスタンス作成時にadmin設定したパスワード）
+```
 
 
 
