@@ -161,12 +161,15 @@ source ~/.bash_profile
 
 ### 1. OracleのMavenリポジトリを利用する設定をpom.xmlへ追記。  
 https://github.com/oracle-japan/code19-coding-hol/blob/master/spring-boot/pom.xml#L69-L92
+
 ※[認証情報はこちらで設定。](https://github.com/oracle-japan/code19-coding-hol/blob/master/spring-boot/README.md#1-maven%E3%81%AE%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E8%A8%AD%E5%AE%9A%E3%82%92%E5%A4%89%E6%9B%B4)
 
 ### 2. ライブラリをpom.xmlのdependencyに追記。  
 https://github.com/oracle-japan/code19-coding-hol/blob/master/spring-boot/pom.xml#L41-L65
+
 [それぞれのライブラリの役割についての参考ページはこちら。](https://www.oracle.com/technetwork/jp/database/application-development/jdbc/overview/default-090281-ja.html#01_06)
 
 ## 3. IDにシーケンスを利用するようEntityを変更。
 https://github.com/oracle-japan/code19-coding-hol/blob/master/spring-boot/src/main/java/com/example/demo/domain/Micropost.java#L10-L11
+
 ※[シーケンスはこちらで作成。](https://github.com/oracle-japan/code19-coding-hol/tree/master/spring-boot#%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90)
