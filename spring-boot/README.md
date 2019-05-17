@@ -2,6 +2,9 @@
 
 以下のSQLを実行してテーブルとシーケンスを作成する。
 
+ツールは問わないが、Oracle MLを利用するとブラウザからSQLを実行できる。  
+[Oracle MLの利用方法はこちら](https://github.com/oracle-japan/code19-coding-hol/blob/master/common/Lab3-ExtensionLesson.md#oracle-ml%E3%82%92%E4%BD%BF%E3%81%86])
+
 ```sql
   CREATE TABLE "MICROPOSTS" 
    ("ID" NUMBER(38,0) NOT NULL ENABLE, 
@@ -25,7 +28,7 @@ CREATE SEQUENCE micropost_seq
 https://www.oracle.com/webapps/maven/register/license.html  
 ※プロファイルをお持ちでない方は、ログイン画面の [プロファイルの作成] からプロファイルを作成してください。
 
-仮想マシンへログインし、Mavenのsettings.xmlファイルを修正する。
+仮想マシンへログインし、Mavenのsettings.xmlファイルに認証情報を追加する。
 
 ```bash
 # ssh -i ~/.ssh/code_tokyo_id_rsa opc@xx.xx.xx.xx
@@ -101,7 +104,7 @@ $ sudo -E java -jar demo-0.0.1-SNAPSHOT.jar
 `http://[仮想マシンのPublic IP]/`
 
 
-# 補足. 仮想マシンの環境構築について
+# 補足1. 仮想マシンの環境構築について
 
 本ハンズオンでは、アプリケーションを実行する仮想マシンにカスタムイメージを利用する。  
 
@@ -112,33 +115,58 @@ $ sudo -E java -jar demo-0.0.1-SNAPSHOT.jar
 本ハンズオンではJDKのバージョンやMavenの認証設定などを統一させるため、仮想マシンを本番環境兼ビルド環境として利用する。  
 それにより、MavenやGitなど、ビルド環境にのみ必要なツールのインストールや設定もスクリプトにて実行している。  
 
+参考 : [OracleのMavenリポジトリを利用するための設定](https://docs.oracle.com/middleware/1213/core/MAVEN/config_maven_repo.htm#MAVEN9010)
+
 ```shell
+# ファイアウォールの設定を変更する
 sudo firewall-cmd --permanent --add-port=80/tcp
 sudo firewall-cmd --permanent --add-port=443/tcp
 sudo firewall-cmd --reload
 
+# ソース取得やビルドに必要なツールをインストールする
 sudo yum -y install git
 sudo yum -y install maven
+# JDK11をインストールする
 sudo yum -y install java-11-openjdk-devel
 sudo alternatives --set java /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.0.1.el7_6.x86_64/bin/java
 
-echo 'export TNS_ADMIN="/usr/local/etc/"' >> ~/.bash_profile
+# Mavenでビルドするために、JAVA_HOMEにjdk11を指定
 echo 'export JAVA_HOME="/usr/lib/jvm/java-11-openjdk"' >> ~/.bash_profile
+# Autonomous DBの接続用Walletファイルの解凍ディレクトリパスをTNS_ADMINへ指定する
+echo 'export TNS_ADMIN="/usr/local/etc/"' >> ~/.bash_profile
 source ~/.bash_profile
 
+# Maven経由でOracleのライセンス認証をし、jdbcなどをダウンロードするために必要な設定
 sudo wget http://central.maven.org/maven2/org/apache/maven/wagon/wagon-http/2.8/wagon-http-2.8-shaded.jar -P /usr/share/maven/lib/ext/
 ```
 
 jarファイルを実行するために必要な設定のみ抜粋したものは、以下の通り。
 
 ```shell
+# ファイアウォールの設定を変更する
 sudo firewall-cmd --permanent --add-port=80/tcp
 sudo firewall-cmd --permanent --add-port=443/tcp
 sudo firewall-cmd --reload
 
+# JDK11をインストールする
 sudo yum -y install java-11-openjdk-devel
 sudo alternatives --set java /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.0.1.el7_6.x86_64/bin/java
 
+# Autonomous DBの接続用Walletファイルの解凍ディレクトリパスをTNS_ADMINへ指定する
 echo 'export TNS_ADMIN="/usr/local/etc/"' >> ~/.bash_profile
+source ~/.bash_profile
 ```
 
+# 補足2. アプリケーションの変更ポイント
+
+### 1. OracleのMavenリポジトリを利用する設定をpom.xmlへ追記。  
+https://github.com/oracle-japan/code19-coding-hol/blob/master/spring-boot/pom.xml#L69-L92
+※[認証情報はこちらで設定。](https://github.com/oracle-japan/code19-coding-hol/blob/master/spring-boot/README.md#1-maven%E3%81%AE%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E8%A8%AD%E5%AE%9A%E3%82%92%E5%A4%89%E6%9B%B4)
+
+### 2. ライブラリをpom.xmlのdependencyに追記。  
+https://github.com/oracle-japan/code19-coding-hol/blob/master/spring-boot/pom.xml#L41-L65
+[それぞれのライブラリの役割についての参考ページはこちら。](https://www.oracle.com/technetwork/jp/database/application-development/jdbc/overview/default-090281-ja.html#01_06)
+
+## 3. IDにシーケンスを利用するようEntityを変更。
+https://github.com/oracle-japan/code19-coding-hol/blob/master/spring-boot/src/main/java/com/example/demo/domain/Micropost.java#L10-L11
+※[シーケンスはこちらで作成。](https://github.com/oracle-japan/code19-coding-hol/tree/master/spring-boot#%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90)
